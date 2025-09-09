@@ -20,4 +20,7 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "Modularization"
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")  // for theme
 include(":app")
+include(":theme")
+include(":features:auth")

@@ -1,82 +1,22 @@
 plugins {
-
-    // Android application plugin
-//    id("com.android.application") version "8.12.2"
-//
-//    // Kotlin Android plugin for Android development
-//    id("org.jetbrains.kotlin.android") version "2.2.10"
-//
-//    id("org.jetbrains.kotlin.plugin.compose") version "2.2.10"
-//
-//    kotlin("kapt")
-//
-//
-//    // Kotlin Serialization plugin (used with Ktor/JSON serialization)
-//    id("org.jetbrains.kotlin.plugin.serialization") version "2.2.10"
-//
-//    // Hilt dependency injection
-//    id("com.google.dagger.hilt.android") version "2.57.1"
-//
-//    // Protobuf (for data serialization)
-//    id("com.google.protobuf") version "0.9.5"
-//
-//    // Code style checker (ktlint)
-//    id("org.jlleitschuh.gradle.ktlint") version "13.1.0"
-//
-//    // Code formatter (Spotless)
-//    id("com.diffplug.spotless") version "7.2.1"
-
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.compose.compiler)
-    alias(libs.plugins.kotlinKapt)
-    alias(libs.plugins.kotlinSerialization)
-    alias(libs.plugins.hilt)
-    alias(libs.plugins.protobuf)
-    alias(libs.plugins.ktlint)
-    alias(libs.plugins.spotless)
 
+    alias(libs.plugins.kotlinKapt)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.kotlin.compose.compiler)
 }
 
 android {
-    namespace = "com.tech.modularization"
-    compileSdk = 36
-
-    defaultConfig {
-        applicationId = "com.tech.modularization"
-        minSdk = 24
-        targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-    kotlinOptions {
-        jvmTarget = "11"
-    }
-    buildFeatures {
+    namespace = "com.tech.auth"
+    buildFeatures{
         compose = true
-        buildConfig = true
     }
 }
+
 dependencies {
 
-    implementation(projects.theme)   //provide  theme module in app module
-    implementation(projects.features.auth) //provide auth module in app module
+    implementation(projects.theme)
     // Android core libraries
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -149,16 +89,4 @@ dependencies {
     androidTestImplementation(libs.ui.test.junit4)
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
-}
-protobuf {
-    protoc {
-        artifact = "com.google.protobuf:protoc:3.19.4"
-    }
-    generateProtoTasks {
-        all().forEach { task ->
-            task.plugins.create("java") {
-                option("lite")
-            }
-        }
-    }
 }

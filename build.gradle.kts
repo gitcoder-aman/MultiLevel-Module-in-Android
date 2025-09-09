@@ -1,17 +1,16 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+import com.android.build.gradle.AppExtension
+import com.android.build.gradle.AppPlugin
 import com.android.build.gradle.BaseExtension
 import com.android.build.gradle.LibraryExtension
-import com.android.build.gradle.AppExtension
+import com.android.build.gradle.LibraryPlugin
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import com.android.build.gradle.AppPlugin
-import com.android.build.gradle.LibraryPlugin
-import com.diffplug.gradle.spotless.JavaExtension
 
 plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.kotlin.android) apply false
-    alias(libs.plugins.kotlin.compose) apply false
+    alias(libs.plugins.kotlin.compose.compiler) apply false
 
     // Code style & linting
     id("org.jlleitschuh.gradle.ktlint") version "13.1.0" apply false
@@ -34,7 +33,6 @@ fun BaseExtension.defaultConfig() {
     compileSdkVersion(36)
 
     defaultConfig {
-        applicationId = "com.tech.modularization"
         minSdk = 24
         targetSdk = 36
 
@@ -71,6 +69,9 @@ fun PluginContainer.applyDefaultConfig(project: Project) {
 subprojects{
     project.plugins.applyDefaultConfig(project)
 
+    afterEvaluate {
+        project.apply("${project.rootDir}/spotless.gradle")
+    }
     tasks.withType<KotlinCompile> {
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_11)
@@ -81,5 +82,4 @@ subprojects{
             )
         }
     }
-
 }
