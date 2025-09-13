@@ -1,13 +1,12 @@
-package com.tech.auth
+package com.tech.modularization.auth
 
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.tech.auth.login.Login
-import com.tech.auth.login.LoginScreen
-import com.tech.auth.splash.SplashScreen
+import com.tech.modularization.auth.login.LoginScreen
+import com.tech.modularization.auth.splash.SplashScreen
 
 const val authRoute = "auth"
 sealed class  AuthScreen(val route : String){

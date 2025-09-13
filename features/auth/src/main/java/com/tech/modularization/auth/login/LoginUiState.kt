@@ -1,4 +1,4 @@
-package com.tech.auth.login
+package com.tech.modularization.auth.login
 
 data class LoginUiState(
     val email : String = "",

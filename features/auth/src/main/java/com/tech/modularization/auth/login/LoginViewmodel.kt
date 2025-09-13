@@ -1,10 +1,18 @@
-package com.tech.auth.login
+package com.tech.modularization.auth.login
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.tech.modularization.auth.domain.LoginUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class LoginViewmodel : ViewModel() {
+@HiltViewModel
+class LoginViewmodel @Inject constructor(
+    private val loginUseCase: LoginUseCase
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow(LoginUiState())
     val uiState : StateFlow<LoginUiState> = _uiState
@@ -18,7 +26,7 @@ class LoginViewmodel : ViewModel() {
                 _uiState.value = _uiState.value.copy(password = uiEvent.password)
             }
             is LoginUiEvent.Login -> {
-
+                login()
             }
             is LoginUiEvent.ForgetPassword -> {
 
@@ -27,5 +35,8 @@ class LoginViewmodel : ViewModel() {
 
             }
         }
+    }
+    fun login() = viewModelScope.launch {
+        loginUseCase.invoke(_uiState.value.email,_uiState.value.password)
     }
 }

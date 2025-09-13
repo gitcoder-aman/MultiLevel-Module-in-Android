@@ -17,6 +17,7 @@ android {
 dependencies {
 
     implementation(projects.theme)
+    implementation(projects.features.auth.domain)
     // Android core libraries
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

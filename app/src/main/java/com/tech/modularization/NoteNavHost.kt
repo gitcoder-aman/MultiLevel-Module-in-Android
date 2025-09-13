@@ -1,11 +1,10 @@
 package com.tech.modularization
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import com.tech.auth.authNavGraph
-import com.tech.auth.authRoute
+import com.tech.modularization.auth.authNavGraph
+import com.tech.modularization.auth.authRoute
 
 @Composable
 fun NoteNavHost(navHostController: NavHostController) {

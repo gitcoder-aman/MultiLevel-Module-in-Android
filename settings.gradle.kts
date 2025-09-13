@@ -24,3 +24,6 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")  // for theme
 include(":app")
 include(":theme")
 include(":features:auth")
+include(":network")
+include(":features:auth:data")
+include(":features:auth:domain")

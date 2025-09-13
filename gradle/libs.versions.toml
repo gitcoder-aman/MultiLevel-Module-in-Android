@@ -39,6 +39,7 @@ protobufJavalite = "4.32.0"
 spotless = "7.2.1"
 timber = "5.0.1"
 truth = "1.4.4"
+jetbrainsKotlinJvm = "2.2.10"
 
 
 [libraries]
@@ -100,6 +101,7 @@ hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 protobuf = { id = "com.google.protobuf", version.ref = "protobuf" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
+jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
 
 
 

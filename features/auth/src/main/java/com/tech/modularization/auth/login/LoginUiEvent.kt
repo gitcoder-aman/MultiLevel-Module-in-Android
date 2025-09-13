@@ -1,4 +1,4 @@
-package com.tech.auth.login
+package com.tech.modularization.auth.login
 
 sealed class LoginUiEvent{
     data class EmailChanged(val email : String) : LoginUiEvent()

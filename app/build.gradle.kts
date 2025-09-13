@@ -60,6 +60,9 @@ android {
                 "proguard-rules.pro"
             )
         }
+        debug {
+            buildConfigField("String","MY_APP_HOST","\"127.0.0.1\"")
+        }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -76,7 +79,12 @@ android {
 dependencies {
 
     implementation(projects.theme)   //provide  theme module in app module
+    implementation(projects.network) //provide network module in app module
+
     implementation(projects.features.auth) //provide auth module in app module
+    implementation(projects.features.auth.data)
+    implementation(projects.features.auth.domain)
+
     // Android core libraries
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
