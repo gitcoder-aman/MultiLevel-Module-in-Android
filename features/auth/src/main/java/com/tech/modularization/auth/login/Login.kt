@@ -3,8 +3,10 @@ package com.tech.modularization.auth.login
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -13,6 +15,7 @@ import androidx.compose.material.icons.automirrored.outlined.ArrowForward
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -28,27 +31,36 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.transition.CircularPropagation
 import com.tech.auth.R
 import com.tech.theme.AppTheme
 import com.tech.theme.component.AppPreview
 import com.tech.theme.component.AppTextField
+import java.nio.file.WatchEvent
 
 @Composable
-fun LoginScreen(loginViewmodel: LoginViewmodel) {
+fun LoginScreen(loginViewmodel: LoginViewmodel,onAuthAccess:()-> Unit) {
 
     val uiState =  loginViewmodel.uiState.collectAsStateWithLifecycle()
 
-    Login(
-        uiState = uiState.value,
-        onEvent = {
-            loginViewmodel.onEvent(it)
+    when(val state = uiState.value){
+        is LoginUiState.Authenticated -> {
+            onAuthAccess()
         }
-    )
+        is LoginUiState.NotAuthenticated -> {
+            Login(
+                uiState =  state,
+                onEvent = {
+                    loginViewmodel.onEvent(it)
+                }
+            )
+        }
+    }
 }
 
 @Composable
 fun Login(
-    uiState : LoginUiState,
+    uiState : LoginUiState.NotAuthenticated,
     onEvent: (LoginUiEvent) ->Unit
 ) {
 
@@ -74,8 +86,10 @@ fun Login(
             hint = "yourname@domain.com",
             leadingIcon = Icons.Filled.Email,
             imeAction = ImeAction.Next,
+            error = uiState.emailError,
             label = R.string.email,
         )
+        Spacer(Modifier.height(8.dp))
         AppTextField(
             value = uiState.password,
             onValueChange = {
@@ -85,8 +99,25 @@ fun Login(
             leadingIcon = Icons.Filled.Lock,
             imeAction = ImeAction.Done,
             isPasswordField = true,
+            error = uiState.passwordError,
             label = R.string.password,
         )
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(38.dp)
+        ) {
+            if(uiState.isLoading){
+                CircularProgressIndicator(modifier = Modifier.align(CenterHorizontally))
+            }
+            uiState.loginError?.let { error->
+                Text(
+                    text = stringResource(id = error),
+                    color = MaterialTheme.colorScheme.error,
+                    modifier = Modifier.align(CenterHorizontally)
+                )
+            }
+        }
         Row(
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -111,7 +142,7 @@ fun Login(
                     .weight(1f)
                     .padding(start = 16.dp),
                 onClick = {
-
+                    onEvent.invoke(LoginUiEvent.Login)
                 }
             ) {
                 Icon(
@@ -151,7 +182,7 @@ fun LoginPreview() {
     AppTheme {
         Surface {
             Login(
-                uiState = LoginUiState(),
+                uiState = LoginUiState.NotAuthenticated(),
                 onEvent = {}
             )
         }

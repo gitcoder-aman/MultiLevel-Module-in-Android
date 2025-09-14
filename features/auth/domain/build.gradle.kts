@@ -7,5 +7,6 @@ plugins {
 dependencies{
     implementation(projects.features.auth.data)
     implementation(libs.javax.inject)
+    implementation(projects.storage)
     implementation(projects.network)
 }

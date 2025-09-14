@@ -1,31 +1,5 @@
 plugins {
 
-    // Android application plugin
-//    id("com.android.application") version "8.12.2"
-//
-//    // Kotlin Android plugin for Android development
-//    id("org.jetbrains.kotlin.android") version "2.2.10"
-//
-//    id("org.jetbrains.kotlin.plugin.compose") version "2.2.10"
-//
-//    kotlin("kapt")
-//
-//
-//    // Kotlin Serialization plugin (used with Ktor/JSON serialization)
-//    id("org.jetbrains.kotlin.plugin.serialization") version "2.2.10"
-//
-//    // Hilt dependency injection
-//    id("com.google.dagger.hilt.android") version "2.57.1"
-//
-//    // Protobuf (for data serialization)
-//    id("com.google.protobuf") version "0.9.5"
-//
-//    // Code style checker (ktlint)
-//    id("org.jlleitschuh.gradle.ktlint") version "13.1.0"
-//
-//    // Code formatter (Spotless)
-//    id("com.diffplug.spotless") version "7.2.1"
-
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose.compiler)
@@ -61,7 +35,7 @@ android {
             )
         }
         debug {
-            buildConfigField("String","MY_APP_HOST","\"127.0.0.1\"")
+            buildConfigField("String","MY_APP_HOST","\"10.0.2.2\"")
         }
     }
     compileOptions {
@@ -84,6 +58,7 @@ dependencies {
     implementation(projects.features.auth) //provide auth module in app module
     implementation(projects.features.auth.data)
     implementation(projects.features.auth.domain)
+    implementation(projects.storage)
 
     // Android core libraries
     implementation(libs.androidx.core.ktx)

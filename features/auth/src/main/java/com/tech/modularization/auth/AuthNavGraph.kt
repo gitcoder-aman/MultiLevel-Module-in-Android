@@ -1,6 +1,6 @@
 package com.tech.modularization.auth
 
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -21,12 +21,16 @@ fun NavGraphBuilder.authNavGraph(
 ){
     navigation(startDestination = AuthScreen.Splash.route,route = authRoute){
         composable(AuthScreen.Splash.route) {
-            SplashScreen()
-            navController.navigate(AuthScreen.Login.route)
+            SplashScreen(
+                splashViewModel = hiltViewModel(),
+                navController = navController,
+                onAuthSuccess = onAuthSuccess
+            )
         }
         composable(AuthScreen.Login.route){
             LoginScreen(
-                loginViewmodel = viewModel()
+                loginViewmodel = hiltViewModel(),
+                onAuthAccess = onAuthSuccess
             )
         }
     }

@@ -9,7 +9,7 @@ class UserMapper @Inject constructor() : Mapper<UserApiModel, User> {
             id = from.id,
             fullName = from.fullName,
             email = from.email,
-            createdAt = from.createAt,
+            createdAt = from.createdAt,
             avatar = from.avatar
         )
     }

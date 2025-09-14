@@ -6,4 +6,8 @@
     <string name="click_here_to_reset">Click here to reset</string>
     <string name="dont_have_account">If You Don\'t have an account Click here to signup</string>
     <string name="agree_to_term">By logging in or signing up you agree to out term and condition.</string>
+    <string name="email_empty">Email cann\'t be empty.</string>
+    <string name="invalid_email">Invalid Email</string>
+    <string name="password_length_error">Error! Password length at least 4.</string>
+    <string name="invalid_email_password"><![CDATA[Invalid Email & Passsword]]></string>
 </resources>

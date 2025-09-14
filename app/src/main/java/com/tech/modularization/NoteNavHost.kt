@@ -3,6 +3,7 @@ package com.tech.modularization
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import com.tech.modularization.auth.authNavGraph
 import com.tech.modularization.auth.authRoute
 
@@ -18,5 +19,8 @@ fun NoteNavHost(navHostController: NavHostController) {
 
             }
         )
+        composable(homeRoute) {
+
+        }
     }
 }

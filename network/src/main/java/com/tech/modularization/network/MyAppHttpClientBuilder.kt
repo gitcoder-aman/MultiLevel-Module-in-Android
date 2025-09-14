@@ -1,5 +1,6 @@
 package com.tech.modularization.network
 
+import com.tech.modularization.storage.SessionHandler
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.engine.cio.endpoint
@@ -15,9 +16,13 @@ import io.ktor.client.request.header
 import io.ktor.http.HttpHeaders
 import io.ktor.http.URLProtocol
 import io.ktor.serialization.kotlinx.json.json
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
 
-class MyAppHttpClientBuilder {
+class MyAppHttpClientBuilder(
+    private val sessionHandler: SessionHandler
+) {
 
     private lateinit var protocol : URLProtocol
     private lateinit var host : String
@@ -61,8 +66,11 @@ class MyAppHttpClientBuilder {
             install(Auth){
                 bearer {
                     loadTokens {
-                        BearerTokens(accessToken = "", refreshToken = "")
+                        runBlocking {
+                            BearerTokens(accessToken = sessionHandler.getCurrentUser().first().authKey, refreshToken = "")
+                        }
                     }
+//                    refreshTokens()
                 }
             }
             install(Logging){
